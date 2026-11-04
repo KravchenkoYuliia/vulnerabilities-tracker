@@ -15,8 +15,18 @@ services:
       timeout: 3s
       retries: 10
 
+  seeder_cve:
+    build: ./database
+    container_name: seeder_cve
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+  
   backend:
     build: ./backend
+    container_name: spring_backend
     ports:
       - "8080:8080"
     env_file: .env
