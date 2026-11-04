@@ -24,6 +24,7 @@ function severityFor( score ) {
   return 'NONE'
 
 }
+
 const formSeverity = computed( () => severityFor( form.value.cvssScore ) )
 
 function productName( v ) {
@@ -62,7 +63,7 @@ async function load() {
 
   try {
     error.value = ''
-    ;[vulnerabilities.value/*, products.value*/] = await Promise.all( [api.vulnerabilities()/*, api.products()*/] )
+    ;[vulnerabilities.value, products.value] = await Promise.all( [api.vulnerabilities(), api.products()] )
   } catch ( e ) {
     error.value = `Cannot reach the backend ( ${e.message} ). Is Spring Boot running on port 8080?`
   }
